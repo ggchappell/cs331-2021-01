@@ -30,7 +30,8 @@ io.write("Here is the secret message:\n\n")
 io.write(string.format([[%s %]]..[==[s %s %s %]==]..'s %s\n',
          ff(tt[1]),ff(tt[2]),ff(tt[3]),ff(tt[4]),ff(tt[5]),ff(tt[6])))
 
--- Wait for user
-io.write("\nPress ENTER to quit ")
-io.read("*l")
+io.write("\n")
+-- Uncomment the following to wait for the user before quitting
+--io.write("Press ENTER to quit ")
+--io.read("*l")
 
