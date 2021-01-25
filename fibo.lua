@@ -15,14 +15,14 @@
 -- Given n >= 0, return Fibonacci number F(n).
 function fibo(n)
     -- Variables holding consecutive Fibonacci numbers
-    local currfibo, nextfibo = 0, 1
+    local currfib, nextfib = 0, 1
 
-    -- Advance currfibo, nextfibo as many times as needed
+    -- Advance currfib, nextfib as many times as needed
     for i = 1, n do
-        currfibo, nextfibo = nextfibo, currfibo + nextfibo
+        currfib, nextfib = nextfib, currfib + nextfib
     end
 
-    return currfibo
+    return currfib
 end
 
 
