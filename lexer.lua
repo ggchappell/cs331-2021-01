@@ -1,8 +1,8 @@
 -- lexer.lua  UNFINISHED
 -- VERSION 2
 -- Glenn G. Chappell
--- Started: 2020-02-03
--- Updated: 2020-02-03
+-- Started: 2021-02-03
+-- Updated: 2021-02-03
 --
 -- For CS F331 / CSCE A331 Spring 2021
 -- In-Class Lexer Module
