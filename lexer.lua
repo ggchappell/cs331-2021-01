@@ -1,9 +1,18 @@
 -- lexer.lua  UNFINISHED
+-- VERSION 2
 -- Glenn G. Chappell
--- 2021-02-03
+-- Started: 2020-02-03
+-- Updated: 2020-02-03
 --
 -- For CS F331 / CSCE A331 Spring 2021
 -- In-Class Lexer Module
+
+-- History:
+-- - v1:
+--   - Framework written. Lexer treats every character as punctuation.
+-- - v2:
+--   - Add state LETTER, with handler. Write skipWhitespace. Add
+--     comment on invariants.
 
 -- Usage:
 --
@@ -144,6 +153,9 @@ function lexer.lex(program)
     -- ***** Variables (like class data members) *****
 
     local pos       -- Index of next character in program
+                    -- INVARIANT: when getLexeme is called, pos is
+                    --  EITHER the index of the first character of the
+                    --  next lexeme OR program:len()+1
     local state     -- Current state for our state machine
     local ch        -- Current character
     local lexstr    -- The lexeme, so far
@@ -152,8 +164,9 @@ function lexer.lex(program)
 
     -- ***** States *****
 
-    local DONE  = 0
-    local START = 1
+    local DONE   = 0
+    local START  = 1
+    local LETTER = 2
 
     -- ***** Character-Related Utility Functions *****
 
@@ -191,7 +204,31 @@ function lexer.lex(program)
     -- Skip whitespace and comments, moving pos to the beginning of
     -- the next lexeme, or to program:len()+1.
     local function skipWhitespace()
-        -- WRITE THIS!!!
+        while true do
+            -- Skip whitespace characters
+            while isWhitespace(currChar()) do
+                drop1()
+            end
+
+            -- Done if no comment
+            if currChar() ~= "/" or nextChar() ~= "*" then
+                break
+            end
+
+            -- Skip comment
+            drop1()  -- Drop leading "/"
+            drop1()  -- Drop leading "*"
+            while true do
+                if currChar() == "*" and nextChar() == "/" then
+                    drop1()  -- Drop trailing "*"
+                    drop1()  -- Drop trailing "/"
+                    break
+                elseif currChar() == "" then  -- End of input?
+                   return
+                end
+                drop1()  -- Drop character inside comment
+            end
+        end
     end
 
     -- ***** State-Handler Functions *****
@@ -204,11 +241,28 @@ function lexer.lex(program)
     end
 
     local function handle_START()
-        -- WRITE THIS!!!
-        -- Below is incorrect dummy code
-        add1()
-        state = DONE
-        category = lexer.PUNCT
+        if isLetter(ch) or ch == "_" then
+            add1()
+            state = LETTER
+        else
+            add1()
+            state = DONE
+            category = lexer.PUNCT
+        end
+    end
+
+    local function handle_LETTER()
+        if isLetter(ch) or ch == "_" or isDigit(ch) then
+            add1()
+        else
+            state = DONE
+            if lexstr == "begin" or lexstr == "end"
+              or lexstr == "print" then
+                category = lexer.KEY
+            else
+                category = lexer.ID
+            end
+        end
     end
 
     -- ***** Table of State-Handler Functions *****
@@ -216,6 +270,7 @@ function lexer.lex(program)
     handlers = {
         [DONE]=handle_DONE,
         [START]=handle_START,
+        [LETTER]=handle_LETTER,
     }
 
     -- ***** Iterator Function *****
