@@ -295,7 +295,7 @@ function lexer.lex(program)
             end
         end
     end
-    
+
     -- State DIGIT: we are in a NUMLIT, and we have NOT seen ".".
     local function handle_DIGIT()
         if isDigit(ch) then
@@ -308,7 +308,7 @@ function lexer.lex(program)
             category = lexer.NUMLIT
         end
     end
-    
+
     -- State DIGDOT: we are in a NUMLIT, and we have seen ".".
     local function handle_DIGDOT()
         if isDigit(ch) then
