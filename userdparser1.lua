@@ -41,6 +41,6 @@ check("((abc_39))")
 check("(((((%)))))")
 check("(a,b,c)")
 check("(((x))")
--- check("((x)))")
--- check("a,b,c")
+check("((x)))")
+check("a,b,c")
 
