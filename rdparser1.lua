@@ -1,4 +1,4 @@
--- rdparser1.lua  UNFINISHED
+-- rdparser1.lua
 -- Glenn G. Chappell
 -- 2021-02-08
 --
@@ -117,6 +117,7 @@ end
 
 
 local parse_item
+local parse_thing
 
 
 -- *********************************************************************
@@ -159,8 +160,37 @@ end
 -- Parsing function for nonterminal "item".
 -- Function init must be called before this function is called.
 function parse_item()
-    io.write("***** FUNCTION parse_item NEEDS TO BE WRITTEN!!!\n")
-    return false
+    if matchString("(") then
+        if not parse_item() then
+            return false
+        end
+        if not matchString(")") then
+            return false
+        end
+        -- We would construct an AST here
+        return true
+    elseif parse_thing() then
+        -- We would construct an AST here
+        return true
+    else
+        return false
+    end
+end
+
+
+-- parse_thing
+-- Parsing function for nonterminal "thing".
+-- Function init must be called before this function is called.
+function parse_thing()
+    if matchCat(lexer.ID) then
+        -- We would construct an AST here
+        return true
+    elseif matchString("%") then
+        -- We would construct an AST here
+        return true
+    else
+        return false
+    end
 end
 
 
