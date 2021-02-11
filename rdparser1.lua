@@ -1,6 +1,7 @@
 -- rdparser1.lua
 -- Glenn G. Chappell
--- 2021-02-08
+-- Started: 2021-02-08
+-- Updated: 2021-02-10
 --
 -- For CS F331 / CSCE A331 Spring 2021
 -- Recursive-Descent Parser #1: Simple
@@ -127,16 +128,19 @@ local parse_thing
 
 -- parse
 -- Given program, initialize parser and call parsing function for start
--- symbol. Returns boolean indicating successful parse or not.
+-- symbol. Returns pair of booleans. First indicates successful parse or
+-- not. Second indicates whether the parser reached the end of the
+-- input or not.
 function rdparser1.parse(prog)
     -- Initialization
     init(prog)
 
     -- Get results from parsing
     local good = parse_item()  -- Parse start symbol
+    local done = atEnd()
 
     -- And return them
-    return good
+    return good, done
 end
 
 
