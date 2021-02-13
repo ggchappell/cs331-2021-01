@@ -269,14 +269,24 @@ end
 function getCoroutineValues(f, param)
     assert(type(f)=="function",
            "getCoroutineValues: f is not a function")
+
     local covals = {}  -- Array of values yielded by coroutine f
     local co = coroutine.create(f)
     local ok, value = coroutine.resume(co, param)
+
     while (coroutine.status(co) ~= "dead") do
         table.insert(covals, value)
         ok, value = coroutine.resume(co)
     end
-    assert(ok, "Error in coroutine")
+
+    -- Error in coroutine?
+    if not ok then
+        io.write("*** getCoroutineValues: error in coroutine:\n")
+        io.write(value.."\n")  -- Print error trace
+        terminate(1)
+    end
+
+    -- Return array of values
     return covals
 end
 
