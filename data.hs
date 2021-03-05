@@ -1,6 +1,7 @@
 -- data.hs  UNFINISHED
 -- Glenn G. Chappell
--- 2020-03-01
+-- Started: 2020-03-01
+-- Updated: 2020-03-05
 --
 -- For CS F331 / CSCE A331 Spring 2021
 -- Code from 3/1 - Haskell: Data
@@ -102,4 +103,56 @@ instance Show Product where
 --   show dove_soap
 --   dove_soap
 --   show dove_soap ++ " is not soap; it is a *beauty bar*."
+
+
+-- ***** Options & Parametrization *****
+
+
+-- In a data declaration, we can separate options with a vertical bar
+-- (|). For example, if Haskell did not have type Bool, then we could
+-- define it ourselves, as follows.
+
+-- data Bool = True | False
+
+-- A data declaration can be *parametrized*. The result is something
+-- like a C++ class template: we can make a type using another type. For
+-- example, if Haskell did not have Either, then we could define it
+-- ourselves, as follows.
+
+-- data Either a b = Left a | Right b
+
+-- Putting these ideas together, we can define a Binary Tree.
+-- Below, /vt is the value type.
+
+data BT vt = BTEmpty | BTNode vt (BT vt) (BT vt)
+-- Values given to BTNode:
+-- - Value in node
+-- - Left subtree
+-- - Right subtree
+
+-- Here are some simple functions using BT.
+
+isEmptyBT :: BT a -> Bool
+isEmptyBT BTEmpty = True
+isEmptyBT (BTNode _ _ _) = False
+
+rootValue :: BT a -> a
+rootValue (BTNode v _ _) = v
+rootValue BTEmpty = error "rootValue: given BT is empty"
+
+leftSubtree :: BT a -> BT a
+leftSubtree (BTNode _ lsub _) = lsub
+leftSubtree BTEmpty = error "leftSubtree: given BT is empty"
+
+rightSubtree :: BT a -> BT a
+rightSubtree (BTNode _ _ rsub) = rsub
+rightSubtree BTEmpty = error "rightSubtree: given BT is empty"
+
+-- Try:
+--   t1 = BTNode "Yo!" BTEmpty BTEmpty
+--   t2 = BTEmpty
+--   isEmptyBT t1
+--   isEmptyBT t2
+--   rootValue t1
+--   rootValue t2
 
