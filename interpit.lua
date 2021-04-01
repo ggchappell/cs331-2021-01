@@ -1,4 +1,4 @@
--- interpit.lua  UNFINISHED
+-- interpit.lua  INCOMPLETE
 -- Glenn G. Chappell
 -- 2021-03-31
 --
@@ -187,13 +187,69 @@ function interpit.interp(ast, state, incall, outcall)
 
     -- Forward declare local functions
     local interp_stmt_list
+    local interp_stmt
+    local eval_expr
 
 
     -- interp_stmt_list
-    -- Given the ast for a statement list, executes it.
+    -- Given the ast for a statement list, execute it.
     function interp_stmt_list(ast)
-        print("**** Function interp_stmt_list needs to be written!")
-        -- TODO: Write this
+        for i = 2, #ast do
+            interp_stmt(ast[i])
+        end
+    end
+
+
+    -- interp_stmt
+    -- Given the ast for a statement, execute it.
+    function interp_stmt(ast)
+        if ast[1] == WRITE_STMT then
+            for i = 2, #ast do
+                if ast[i][1] == STRLIT_OUT then
+                    local str = ast[i][2]
+                    outcall(str:sub(2, str:len()-1))
+                elseif ast[i][1] == CR_OUT then
+                    outcall("\n")
+                elseif ast[i][1] == DQ_OUT then
+                    print("*** UNIMPLEMENTED WRITE ARG")
+                elseif ast[i][1] == CHAR_CALL then
+                    print("*** UNIMPLEMENTED WRITE ARG")
+                else  -- Expression
+                    local val = eval_expr(ast[i])
+                    outcall(numToStr(val))
+                end
+            end
+        elseif ast[1] == FUNC_DEF then
+            local funcname = ast[2]
+            local funcbody = ast[3]
+            state.f[funcname] = funcbody
+        elseif ast[1] == FUNC_CALL then
+            local funcname = ast[2]
+            local funcbody = state.f[ast[2]]
+            if funcbody == nil then
+                funcbody = { STMT_LIST }
+            end
+            interp_stmt_list(funcbody)
+        else
+            print("*** UNIMPLEMENTED STATEMENT")
+        end
+    end
+
+
+    -- eval_expr
+    -- Given the AST for an expression, evaluate it and return the
+    -- value.
+    function eval_expr(ast)
+        local result
+
+        if ast[1] == NUMLIT_VAL then
+            result = strToNum(ast[2])
+        else
+            print("*** UNIMPLEMENTED EXPRESSION")
+            result = 42  -- DUMMY VALUE
+        end
+
+        return result
     end
 
 
