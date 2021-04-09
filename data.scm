@@ -85,20 +85,20 @@
 ; ***** Varying Number of Parameters *****
 
 
-; ss
+; add
 ; Just like +.
-(define (ss . args)
+(define (add . args)
   (if (null? args)
       0
-      (+ (car args) (apply ss (cdr args)))
+      (+ (car args) (apply add (cdr args)))
       )
   )
 
 ; Try:
-;   (ss 3 6)
-;   (ss 1 2 3 4 5 6)
-;   (ss 42)
-;   (ss)
+;   (add 3 6)
+;   (add 1 2 3 4 5 6)
+;   (add 42)
+;   (add)
 
 
 ; ***** Manipulating Trees *****
