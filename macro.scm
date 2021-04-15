@@ -1,15 +1,16 @@
 #lang scheme
-; macro.scm  UNFINISHED
+; macro.scm
 ; Glenn G. Chappell
-; 2021-04-12
+; Started: 2021-04-12
+; Updated: 2021-04-14
 ;
 ; For CS F331 / CSCE A331 Spring 2021
-; Code from 4/12 - Scheme: Macros
+; Code from 4/12 & 4/14 - Scheme: Macros
 
 
-(display "This file contains sample code from April 12, 2021,")
+(display "This file contains sample code from April 12")
 (newline)
-(display "for the topic \"Scheme: Macros\".")
+(display "& April 14, 2021, for the topic \"Scheme: Macros\".")
 (newline)
 (display "It will execute, but it is not intended to do anything")
 (newline)
@@ -120,6 +121,70 @@
 ;   (for-loop2 (i 3 (+ 2 5)) (display i) (newline))
 
 
+; ***** Multiple-Pattern Macros *****
+
+
+; define-syntax-rule is wrapper around define-syntax & syntax-rules. The
+; latter can take multiple patterns beginning wtih the same identifier.
+
+; Here is qlist, expanded version.
+
+(define-syntax qlist2
+  (syntax-rules ()
+    [(qlist2 . args)
+     'args
+     ]
+    )
+  )
+
+; Try:
+;   (qlist2 (+ 1 2) 7 (+ 2 3))
+
+; An example using multiple patterns.
+
+; def12
+; Define one or two identifiers.
+(define-syntax def12
+  (syntax-rules ()
+    [(def12 v1 e1)
+     (define v1 e1)
+     ]
+    [(def12 v1 e1 v2 e2)
+     (begin (define v1 e1) (define v2 e2))
+     ]
+    )
+  )
+
+; Try:
+;   (def12 x (+ 5 8))
+;   x
+
+; Try:
+;   (def12 a (+ 1 2) b (+ 2 3))
+;   a
+;   b
+
+; defbunch
+; Define an arbitrary number of identifiers.
+(define-syntax defbunch
+  (syntax-rules ()
+    [(def12)
+     (void)
+     ]
+    [(defbunch v1 e1 . rest)
+     (begin
+       (define v1 e1)
+       (defbunch . rest)
+       )
+     ]
+    )
+  )
+
+; Try:
+;   (defbunch a 1 b 2 c (+ 3 3))
+;   c
+
+
 ; ***** Keywords in Macros *****
 
 
@@ -127,6 +192,51 @@
 ; of *keywords*. These are words that only match themselves in a
 ; pattern. The identifier being defined is always a keyword; the list
 ; allows others to be specified.
+
+; for-each
+; For-each loop with specified variable. For each value in the given
+; list, in order, the variable is given that value, and the body is
+; executed.
+; Example usage:
+;   (for-each (i in '(2 4 10)) (display i) (newline))
+
+(define-syntax for-each
+  (syntax-rules (in)  ; "in" is a keyword
+    [(for-each (var in thelist) . body)
+     (eval (append '(for-each-helper var) (list thelist) 'body))
+     ]
+    )
+  )
+
+; for-each-helper
+; Helper macro for for-each
+(define-syntax for-each-helper
+  (syntax-rules ()
+    [(for-each-helper var (first . rest) . body)
+     (let
+         ([var first])
+       (begin
+         (begin . body)
+         (for-each-helper var rest . body)
+         )
+       )
+     ]
+    [(for-each-helper var () . body)
+     (void)
+     ]
+    )
+  )
+
+; Note the use of pattern matching on the list of values in
+; for-each-helper.
+
+; Try:
+;   (for-each (i in '(2 4 (* 2 5))) (display i) (newline))
+
+; Raise a to the b power: (expt a b)
+
+; Try:
+;   (expt 2 3)
 
 ; qderiv
 ; Differentiate, with respect to the given variable, a given expression.
@@ -281,5 +391,4 @@
 ; Try:
 ;   (define (g x) (deriv x (* x x)))
 ;   (g 5)
-
 
