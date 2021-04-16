@@ -1,6 +1,6 @@
 \ detail.fs
 \ Glenn G. Chappell
-\ 2020-03-24
+\ 2021-03-24
 \
 \ For CS F331 / CSCE A331 Spring 2021
 \ Code from 3/24 - Forth: Details

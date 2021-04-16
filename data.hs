@@ -1,7 +1,7 @@
 -- data.hs
 -- Glenn G. Chappell
--- Started: 2020-03-01
--- Updated: 2020-03-05
+-- Started: 2021-03-01
+-- Updated: 2021-03-05
 --
 -- For CS F331 / CSCE A331 Spring 2021
 -- Code from 3/1 & 3/5 - Haskell: Data
