@@ -1,0 +1,126 @@
+#!./caracal.lua
+# isort.cara
+# Glenn G. Chappell
+# 2021-04-15
+#
+# For CS F331 / CSCE A331 Spring 2021
+# Caracal Example: Insertion Sort
+
+
+# All functions deal with array "data", whose length is given by
+# variable "datalen". We assume datalen >= 0, and items in data have
+# indices 0 .. datalen-1.
+
+
+# Function initData
+# Pushes initial, unsorted values into array data (described above).
+def initData()
+{
+    # Function push
+    # Do a "push back" of value v in data. Increases datalen by 1.
+    def push()
+    {
+        data[datalen] = v;
+        datalen = datalen+1;
+    }
+
+    v = 13;   push();
+    v = 86;   push();
+    v = -5;   push();
+    v = 0;    push();
+    v = 43;   push();
+    v = 6;    push();
+    v = 28;   push();
+    v = 4;    push();
+    v = 17;   push();
+    v = 6;    push();
+    v = 39;   push();
+    v = -85;  push();
+    v = 1;    push();
+    v = 6;    push();
+    v = 18;   push();
+    v = 34;   push();
+    v = 12;   push();
+    v = 3;    push();
+    v = 77;   push();
+    v = 9;    push();
+    v = 28;   push();
+    v = -1;   push();
+}
+
+
+# Function printData
+# Output items in array "data" (described above) on a single line, with
+# items separated by blanks, and the entire dataset followed by a
+# newline.
+def printData()
+{
+    jj = 0;
+    for (jj = 0; jj < datalen; jj = jj+1)
+    {
+        if (jj > 0)
+        {
+            write(" ");
+        }
+        write(data[jj]);
+    }
+    write(cr);
+}
+
+
+# Function insertionSort
+# Sort array data (described above), in ascending order, using Insertion
+# Sort.
+def insertionSort()
+{
+    # i is index of item to insert among earlier items
+    for (i = 1; i < datalen; i = i+1)
+    {
+        savedata_i = data[i];  # Save item to insert
+        done = false;          # Have we found proper spot yet?
+        for (k = i; k > 0 and not done;)
+        {
+            if (not(savedata_i < data[k-1]))
+            {
+                done = true;   # Caracal has no "break", so we do this
+            }
+            else
+            {
+                data[k] = data[k-1];
+                k = k-1;
+            }
+        }
+        # k is the spot where savedata_i goes; put it there
+        data[k] = savedata_i;
+    }
+}
+
+
+# Main Program
+# Print unsorted data, sort it, and print result.
+
+# Print heading
+write("Caracal - Insertion Sort Demo", cr, cr);
+
+# Make initial data
+initData();
+
+# Print initial data
+write("Initial data:", cr);
+printData();
+write(cr);
+
+# Sort
+write("Sorting", cr);
+insertionSort();
+write(cr);
+
+# Print sorted data
+write("Sorted data:", cr);
+printData();
+
+# Wait for user
+# (unnecessary with caracal.lua, so commented out)
+#write(cr, "Press ENTER to quit ");
+#dummy = readnum();
+

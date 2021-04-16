@@ -1,0 +1,65 @@
+#!./caracal.lua
+# collatz.cara
+# Glenn G. Chappell
+# 2021-04-15
+#
+# For CS F331 / CSCE A331 Spring 2021
+# Caracal Example: Collatz Sequences
+
+
+# Function collatz
+# Given a positive integer k, applies the Collatz function once and
+# returns the result. k is not modified.
+def collatz()
+{
+    if (k % 2 == 0)
+    {
+        return k/2;
+    }
+    else
+    {
+        return 3*k + 1;
+    }
+}
+
+
+# Function printCollatzSequence
+# Given a positive integer n, print the Collatz sequence beginning at n
+# and ending at 1, items separated by blanks and ending with a newline.
+# Modifies variable k.
+def printCollatzSequence()
+{
+    for (k = n; k != 1; k = collatz())
+    {
+        write(k, " ");
+    }
+    write(k, cr);
+}
+
+
+# Main Program
+# Repeatedly input a number and prints its Collatz sequence. End by
+# entering zero or a blank line.
+
+# Print header
+write("Caracal - Collatz Sequences Demo", cr, cr);
+
+# Input & sequence printing
+done = false;
+for (done = false; not done;)
+{
+    write("Type a number (0 or blank line to end): ");
+    n = readnum();
+    if (n <= 0)
+    {
+        done = true;
+    }
+    else
+    {
+        write(cr);
+        write("Collatz sequence for ", n, ":", cr);
+        printCollatzSequence();
+        write(cr);
+    }
+}
+

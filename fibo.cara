@@ -1,0 +1,49 @@
+#!./caracal.lua
+# fibo.cara
+# Glenn G. Chappell
+# 2021-02-10
+#
+# For CS F331 / CSCE A331 Spring 2021
+# Compute Fibonacci Numbers
+
+
+# The Fibonacci number F(n), for n >= 0, is defined by F(0) = 0,
+# F(1) = 1, and for n >= 2, F(n) = F(n-2) + F(n-1).
+
+
+# fibo
+# Parameter is in variable n. Return Fibonacci number F(n).
+def fibo()
+{
+    currfib = 0;
+    nextfib = 1;
+    for (i = 0; i < n; i = i+1)
+    {
+        # Advance (currfib, nextfib)
+        tmp = currfib + nextfib;
+        currfib = nextfib;
+        nextfib = tmp;
+    }
+    return currfib;
+}
+
+
+# Main program
+# Print some Fibonacci numbers
+how_many_to_print = 20;
+
+write("Fibonacci Numbers", cr);
+for (j = 0;
+     j < how_many_to_print;
+     j = j+1)
+{
+    n = j;  # Set param for fibo
+    ff = fibo();
+    write("F(", j, ") = ", ff, cr);
+}
+
+# Wait for user
+# (unnecessary with caracal.lua, so commented out)
+#write(cr, "Press ENTER to quit ");
+#dummy = readnum();
+

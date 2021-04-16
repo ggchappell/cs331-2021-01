@@ -1,0 +1,14 @@
+#!./caracal.lua
+# hello.cara
+# Glenn G. Chappell
+# 2021-03-31
+# Hello-world in Caracal
+
+
+write("Hello, world!", cr);
+
+# Wait for user
+# (unnecessary with caracal.lua, so commented out)
+#write(cr, "Press ENTER to quit ");
+#dummy = readnum();
+
