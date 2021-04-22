@@ -177,8 +177,10 @@ check("write(a+1);")
 check("def f(){write(\"yo\")}f();")
 check("a=3;write(a+b, cr);")
 check("a[e*2+1]=2;")
-check("\n  # Caracal Example #1\n  # Glenn G. Chappell\n  # 2021-02-10\n  nn = 3;\n  write(nn, cr);\n")
-io.write("### Above should be the AST given in the Assignment 4 description,\n")
+check("\n  # Caracal Example #1\n  # Glenn G. Chappell\n"..
+      "  # 2021-02-10\n  nn = 3;\n  write(nn, cr);\n")
+io.write("### Above should be the AST given in the Assignment 4 "..
+         "description,\n")
 io.write("### under 'Introduction'\n")
 check("write();elseif")
 io.write("### Above should be ")
