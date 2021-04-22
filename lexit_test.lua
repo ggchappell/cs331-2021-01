@@ -585,7 +585,8 @@ function test_numlit(t)
              "+num, dot @ start")
     checkLex(t, "+123456.", {"+",OPx,"123456",NUMLITx,".",PUNCTx},
              "+num, dot @ end")
-    checkLex(t, "+123.456", {"+",OPx,"123",NUMLITx,".",PUNCTx,"456",NUMLITx},
+    checkLex(t, "+123.456", {"+",OPx,"123",NUMLITx,".",PUNCTx,
+                             "456",NUMLITx},
              "+num, dot in middle")
     checkLex(t, "+1.2.3", {"+",OPx,"1",NUMLITx,".",PUNCTx,"2",NUMLITx,
                            ".",PUNCTx,"3",NUMLITx}, "+num, 2 dots")
@@ -595,7 +596,8 @@ function test_numlit(t)
              "-num, dot @ start")
     checkLex(t, "-123456.", {"-",OPx,"123456",NUMLITx,".",PUNCTx},
              "-num, dot @ end")
-    checkLex(t, "-123.456", {"-",OPx,"123",NUMLITx,".",PUNCTx,"456",NUMLITx},
+    checkLex(t, "-123.456", {"-",OPx,"123",NUMLITx,".",PUNCTx,
+                             "456",NUMLITx},
              "-num, dot in middle")
     checkLex(t, "-1.2.3", {"-",OPx,"1",NUMLITx,".",PUNCTx,"2",NUMLITx,
                            ".",PUNCTx,"3",NUMLITx}, "-num, 2 dots")
@@ -618,24 +620,33 @@ function test_numlit(t)
     checkLex(t, "123e+456", {"123e+456",NUMLITx}, "num with +exp")
     checkLex(t, "123e-456", {"123",NUMLITx,"e",IDx,"-",OPx,
                              "456",NUMLITx}, "num with -exp")
-    checkLex(t, "+123e456", {"+",OPx,"123e456",NUMLITx}, "+num with exp")
-    checkLex(t, "+123e+456", {"+",OPx,"123e+456",NUMLITx}, "+num with +exp")
+    checkLex(t, "+123e456", {"+",OPx,"123e456",NUMLITx},
+             "+num with exp")
+    checkLex(t, "+123e+456", {"+",OPx,"123e+456",NUMLITx},
+                             "+num with +exp")
     checkLex(t, "+123e-456", {"+",OPx,"123",NUMLITx,"e",IDx,"-",OPx,
-                              "456",NUMLITx}, "+num with -exp")
-    checkLex(t, "-123e456", {"-",OPx,"123e456",NUMLITx}, "-num with exp")
-    checkLex(t, "-123e+456", {"-",OPx,"123e+456",NUMLITx}, "-num with +exp")
+                              "456",NUMLITx},
+             "+num with -exp")
+    checkLex(t, "-123e456", {"-",OPx,"123e456",NUMLITx},
+             "-num with exp")
+    checkLex(t, "-123e+456", {"-",OPx,"123e+456",NUMLITx},
+             "-num with +exp")
     checkLex(t, "-123e-456", {"-",OPx,"123",NUMLITx,"e",IDx,"-",OPx,
                               "456",NUMLITx}, "-num with -exp")
     checkLex(t, "123E456", {"123E456",NUMLITx}, "num with Exp")
     checkLex(t, "123E+456", {"123E+456",NUMLITx}, "num with +Exp")
     checkLex(t, "123E-456", {"123",NUMLITx,"E",IDx,"-",OPx,
                              "456",NUMLITx}, "num with -Exp")
-    checkLex(t, "+123E456", {"+",OPx,"123E456",NUMLITx}, "+num with Exp")
-    checkLex(t, "+123E+456", {"+",OPx,"123E+456",NUMLITx}, "+num with +Exp")
+    checkLex(t, "+123E456", {"+",OPx,"123E456",NUMLITx},
+             "+num with Exp")
+    checkLex(t, "+123E+456", {"+",OPx,"123E+456",NUMLITx},
+             "+num with +Exp")
     checkLex(t, "+123E-456", {"+",OPx,"123",NUMLITx,"E",IDx,"-",OPx,
                               "456",NUMLITx}, "+num with -Exp")
-    checkLex(t, "-123E456", {"-",OPx,"123E456",NUMLITx}, "-num with Exp")
-    checkLex(t, "-123E+456", {"-",OPx,"123E+456",NUMLITx}, "-num with +Exp")
+    checkLex(t, "-123E456", {"-",OPx,"123E456",NUMLITx},
+             "-num with Exp")
+    checkLex(t, "-123E+456", {"-",OPx,"123E+456",NUMLITx},
+             "-num with +Exp")
     checkLex(t, "-123E-456", {"-",OPx,"123",NUMLITx,"E",IDx,"-",OPx,
                               "456",NUMLITx}, "-num with -Exp")
 
@@ -717,9 +728,11 @@ function test_strlit(t)
              "partial double-quoted str #3")
     checkLex(t, "\"aabbcc\nd", {"\"aabbcc",MALx,"d",IDx},
              "partial double-quoted str #4")
-    checkLex(t, "'\"'\"'\"", {"'", PUNCTx, "\"'\"",STRLITx,"'",PUNCTx,"\"",MALx},
+    checkLex(t, "'\"'\"'\"", {"'", PUNCTx, "\"'\"",STRLITx,"'",PUNCTx,
+                              "\"",MALx},
              "multiple strs")
-    checkLex(t, "\"#\"#\"\n\"\n\"", {"\"#\"",STRLITx,"\"",MALx,"\"",MALx},
+    checkLex(t, "\"#\"#\"\n\"\n\"", {"\"#\"",STRLITx,"\"",MALx,
+                                     "\"",MALx},
              "strs & comments")
     checkLex(t, "\"a\"a\"a\"a\"",
              {"\"a\"",STRLITx,"a",IDx,"\"a\"",STRLITx,"a",IDx,
@@ -956,7 +969,8 @@ function test_program(t)
     -- Program from slides
     checkLex(t,
         "# fibo\n"..
-        "# Parameter is in variable n. Return Fibonacci number F(n).\n"..
+        "# Parameter is in variable n. "..
+          "Return Fibonacci number F(n).\n"..
         "def fibo()\n"..
         "{\n"..
         "    currfib = 0;\n"..

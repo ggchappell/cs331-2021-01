@@ -710,7 +710,8 @@ function test_simple(t)
       "Simple if #2")
 
     -- Simple for-loop
-    ast = {STMTxLIST, {FORxLOOP, {}, {NUMLITxVAL, "0"}, {}, {STMTxLIST}}}
+    ast = {STMTxLIST, {FORxLOOP, {}, {NUMLITxVAL, "0"}, {},
+      {STMTxLIST}}}
     input = {}
     statein = deepcopy(emptystate)
     expoutput = {}
