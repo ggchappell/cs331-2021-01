@@ -146,7 +146,7 @@ cousin(A, B) :-
 % The last line above should result in an error.
 
 % gcd(+a, +b, ?c)
-% gcd(A, B, C) means the gcd of A and B is C. A, B should be nonnegative
+% gcd(A, B, C) means the GCD of A and B is C. A, B should be nonnegative
 % integers. C should be a nonnegative integer or a free variable.
 gcd(0, B, B).
 gcd(A, B, C) :- A > 0, X is B mod A, gcd(X, A, C).
