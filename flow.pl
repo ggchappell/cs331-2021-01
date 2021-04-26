@@ -85,7 +85,8 @@ print_squares2(A, B) :-
 % Try:
 %   ?- print_squares2(2, 8).
 
-% SWI-Prolog includes "myfor", in the form of "between".
+% SWI-Prolog includes the functionality of "myfor", in the form of
+% "between".
 
 
 % ***** Cut *****
@@ -103,8 +104,8 @@ print_squares2(A, B) :-
 % print_near_sqrt/1
 % For A > 0. print_near_sqrt(A) prints largest integer whose square is
 % at most A.
-near_sqrt(A) :-
-    for(X, 1, A),
+print_near_sqrt(A) :-
+    between(1, A, X),
         X2 is X*X,
         X2 > A, !,
         X1 is X-1,
@@ -112,7 +113,7 @@ near_sqrt(A) :-
         nl.
 
 % Try:
-%   near_sqrt(105).
+%   print_near_sqrt(105).
 
 % Cut can do if ... else.
 
@@ -167,7 +168,7 @@ gcd2(A, B, C) :- X is B mod A, gcd2(X, A, C).
 not(T) :- call(T), !, fail.
 not(_).
 
-% SWI-Prolog includes "not", in the form of "\+".
+% SWI-Prolog includes the functionality of "not", in the form of "\+".
 
 
 % ***** Other Loops *****
@@ -179,7 +180,8 @@ not(_).
 myrepeat.
 myrepeat :- myrepeat.
 
-% SWI-Prolog includes "myrepeat", in the form of "repeat".
+% SWI-Prolog includes the functionality of "myrepeat", in the form of
+% "repeat".
 
 % We can use myrepeat to do something like a while-true-break loop.
 
